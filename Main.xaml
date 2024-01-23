@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="696,1698.4" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:um="clr-namespace:UiPath.Mail;assembly=UiPath.Mail.Activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="794.4,2834.4" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ue="clr-namespace:UiPath.Excel;assembly=UiPath.Excel.Activities" xmlns:ueab="clr-namespace:UiPath.Excel.Activities.Business;assembly=UiPath.Excel.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:um="clr-namespace:UiPath.Mail;assembly=UiPath.Mail.Activities" xmlns:umab="clr-namespace:UiPath.Mail.Activities.Business;assembly=UiPath.Mail.Activities" xmlns:umabh="clr-namespace:UiPath.Mail.Activities.Business.HtmlEditor;assembly=UiPath.Mail.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -105,6 +105,7 @@
       <x:String>UiPath.MicrosoftOffice365.Activities.Mail</x:String>
       <x:String>UiPath.Mail.Activities.Utils</x:String>
       <x:String>UiPath.Mail.Activities.Business.HtmlEditor</x:String>
+      <x:String>System.Activities.Runtime.Collections</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -187,11 +188,19 @@
       <AssemblyReference>System.Linq.Async</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="665.6,1633.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="Main Sequence" sap:VirtualizedContainerService.HintSize="804.8,2769.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="s:DateTime" Name="currentTime" />
-      <Variable x:TypeArguments="s:DateTime" Default="[New DateTime(Now.Year, Now.Month, Now.Day, 10, 0, 0)]" Name="startTime" />
-      <Variable x:TypeArguments="s:DateTime" Default="[New DateTime(Now.Year, Now.Month, Now.Day, 16, 0, 0)]" Name="endTime" />
+      <Variable x:TypeArguments="s:DateTime" Name="startTime">
+        <Variable.Default>
+          <VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="New DateTime(Now.Year, Now.Month, Now.Day, 16, 0, 0)" />
+        </Variable.Default>
+      </Variable>
+      <Variable x:TypeArguments="s:DateTime" Name="endTime">
+        <Variable.Default>
+          <VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="New DateTime(Now.Year, Now.Month, Now.Day, 17, 0, 0)" />
+        </Variable.Default>
+      </Variable>
       <Variable x:TypeArguments="x:Double" Name="totalExecutionFrequency" />
       <Variable x:TypeArguments="s:DateTime" Name="currentDate" />
       <Variable x:TypeArguments="x:String" Name="timeStamp" />
@@ -207,29 +216,44 @@
       <Variable x:TypeArguments="ue:IChartRef" Name="ChartVarExxon" />
       <Variable x:TypeArguments="x:String" Default="caleb.naidoo@firtech.co.za" Name="SenderEmail" />
       <Variable x:TypeArguments="ue:IChartRef" Name="ChartVarWexAcademy" />
+      <Variable x:TypeArguments="x:Boolean" Name="exitLoop" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign sap:VirtualizedContainerService.HintSize="603.2,81.6" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign sap:VirtualizedContainerService.HintSize="742.4,81.6" sap2010:WorkflowViewState.IdRef="Assign_13">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Boolean">[exitLoop]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="742.4,80.8" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="s:DateTime">[currentTime]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="s:DateTime">[Now]</InArgument>
+        <InArgument x:TypeArguments="s:DateTime">[DateTime.Now]</InArgument>
       </Assign.Value>
     </Assign>
-    <If Condition="[currentTime &gt;= startTime AndAlso currentTime &lt;= endTime]" sap:VirtualizedContainerService.HintSize="603.2,1400" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[currentTime &gt;= startTime AndAlso currentTime &lt;= endTime]" sap:VirtualizedContainerService.HintSize="742.4,2415.2" sap2010:WorkflowViewState.IdRef="If_1">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
       <If.Then>
-        <Sequence sap:VirtualizedContainerService.HintSize="569.6,1037.6" sap2010:WorkflowViewState.IdRef="Sequence_2">
+        <Sequence sap:VirtualizedContainerService.HintSize="708.8,2052.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Assign DisplayName="totalExecutionFrequency" sap:VirtualizedContainerService.HintSize="526.4,81.6" sap2010:WorkflowViewState.IdRef="Assign_2">
+          <Assign DisplayName="totalExecutionFrequency" sap:VirtualizedContainerService.HintSize="665.6,80.8" sap2010:WorkflowViewState.IdRef="Assign_2">
             <Assign.To>
               <OutArgument x:TypeArguments="x:Double">[totalExecutionFrequency]</OutArgument>
             </Assign.To>
@@ -237,482 +261,500 @@
               <InArgument x:TypeArguments="x:Double">[((endTime - currentTime).TotalMinutes) / 30]</InArgument>
             </Assign.Value>
           </Assign>
-          <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Clear Excel File" sap:VirtualizedContainerService.HintSize="526.4,24.8" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_3">
-            <ueab:ExcelProcessScopeX.Body>
-              <ActivityAction x:TypeArguments="ui:IExcelProcess">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="592,765.6" sap2010:WorkflowViewState.IdRef="Sequence_21">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="529.6,653.6" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_4" ResizeWindow="None" WorkbookPath="Stock_Trends_Comparison.xlsx">
-                    <ueab:ExcelApplicationCard.Body>
-                      <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
-                        <ActivityAction.Argument>
-                          <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
-                        </ActivityAction.Argument>
-                        <Sequence DisplayName="Clear Excel File Data" sap:VirtualizedContainerService.HintSize="496,384" sap2010:WorkflowViewState.IdRef="Sequence_22">
-                          <sap:WorkflowViewStateService.ViewState>
-                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                            </scg:Dictionary>
-                          </sap:WorkflowViewStateService.ViewState>
-                          <ueab:ClearRangeX DisplayName="Clear Sheet 1" HasHeaders="True" sap:VirtualizedContainerService.HintSize="433.6,116" sap2010:WorkflowViewState.IdRef="ClearRangeX_2" TargetRange="[Excel.Sheet(&quot;ExxonRPA&quot;)]">
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                          </ueab:ClearRangeX>
-                          <ueab:ClearRangeX DisplayName="Clear Sheet 2" HasHeaders="True" sap:VirtualizedContainerService.HintSize="433.6,116" sap2010:WorkflowViewState.IdRef="ClearRangeX_3" TargetRange="[Excel.Sheet(&quot;WexAcademy&quot;)]">
-                            <sap:WorkflowViewStateService.ViewState>
-                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                              </scg:Dictionary>
-                            </sap:WorkflowViewStateService.ViewState>
-                          </ueab:ClearRangeX>
-                        </Sequence>
-                      </ActivityAction>
-                    </ueab:ExcelApplicationCard.Body>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ueab:ExcelApplicationCard>
-                </Sequence>
-              </ActivityAction>
-            </ueab:ExcelProcessScopeX.Body>
+          <ui:CopyFile ContinueOnError="{x:Null}" Destination="Stock_Trends_Comparison.xlsx" DisplayName="Restore Original Template" sap:VirtualizedContainerService.HintSize="665.6,24.8" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="True" Path="Template\Stock_Trends_Comparison_Template.xlsx">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-          </ueab:ExcelProcessScopeX>
-          <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[currentExecutionFrequency &lt; totalExecutionFrequency]" DisplayName="Do While" sap:VirtualizedContainerService.HintSize="526.4,632" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
+          </ui:CopyFile>
+          <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" DisplayName="Do While" sap:VirtualizedContainerService.HintSize="665.6,1375.2" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
             <ui:InterruptibleDoWhile.Body>
-              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="492.8,495.2" sap2010:WorkflowViewState.IdRef="Sequence_20">
+              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="632,1238.4" sap2010:WorkflowViewState.IdRef="Sequence_20">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:MultipleAssign DisplayName="CurrentDate and Timestamp" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
-                  <ui:MultipleAssign.AssignOperations>
-                    <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="s:DateTime">[currentDate]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="s:DateTime">[DateTime.Now.Date]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                      <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
-                        <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="x:String">[timeStamp]</OutArgument>
-                        </ui:AssignOperation.To>
-                        <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:String">[DateTime.Now.ToString("HH:mm:ss")]</InArgument>
-                        </ui:AssignOperation.Value>
-                      </ui:AssignOperation>
-                    </scg:List>
-                  </ui:MultipleAssign.AssignOperations>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </ui:MultipleAssign>
-                <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Browser Chrome: RPA Stock Market" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="Simulate" ScopeGuid="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V2" WindowResize="Maximize">
-                  <uix:NApplicationCard.Body>
-                    <ActivityAction x:TypeArguments="x:Object">
-                      <ActivityAction.Argument>
-                        <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
-                      </ActivityAction.Argument>
-                      <Sequence DisplayName="Browser Data Extraction " sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_4">
-                        <sap:WorkflowViewStateService.ViewState>
-                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                          </scg:Dictionary>
-                        </sap:WorkflowViewStateService.ViewState>
-                        <uix:NSelectItem DisplayName="Select Item '----- Select -----'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NSelectItem_3" Item="Exxon RPA Corp." ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
-                          <uix:NSelectItem.Items>
-                            <scg:List x:TypeArguments="x:String" Capacity="4">
-                              <x:String>----- Select -----</x:String>
-                              <x:String>Exenon UI Pharma.</x:String>
-                              <x:String>WEX Academy Inc.</x:String>
-                              <x:String>Exxon RPA Corp.</x:String>
-                            </scg:List>
-                          </uix:NSelectItem.Items>
-                          <uix:NSelectItem.Target>
-                            <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="59, 385, 200, 28" DesignTimeScaleFactor="1.25" ElementType="DropDown" FriendlyName="'----- Select -----'" FullSelectorArgument="&lt;webctrl id='country' tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='country' tag='SELECT' type='' class='' aaname='' /&gt;" Guid="791c3d49-da79-4c19-b389-0e562c684f16" InformativeScreenshot="95ec1e559b09d5da8846cc333b3e8584.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive" WaitForReadyArgument="None">
-                              <uix:TargetAnchorable.Anchors>
-                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                                  <uix:Target DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" SearchSteps="FuzzySelector" />
-                                </scg:List>
-                              </uix:TargetAnchorable.Anchors>
-                            </uix:TargetAnchorable>
-                          </uix:NSelectItem.Target>
-                        </uix:NSelectItem>
-                        <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'XOM'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NClick_3" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
-                          <uix:NClick.Target>
-                            <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="264, 385, 27, 27" DesignTimeScaleFactor="1.25" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" Guid="195bd747-1f58-4e5c-98ac-94af52f46ee6" InformativeScreenshot="079c32d05c3193848bd20749ccd3443f.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
-                              <uix:TargetAnchorable.Anchors>
-                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                                  <uix:Target DesignTimeRectangle="308, 390, 41, 24" ElementType="Text" FriendlyName="'XOM'" FullSelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' type='' class='' check:innerText='XOM' /&gt;" ImageBase64="" SearchSteps="Selector, FuzzySelector" />
-                                </scg:List>
-                              </uix:TargetAnchorable.Anchors>
-                            </uix:TargetAnchorable>
-                          </uix:NClick.Target>
-                        </uix:NClick>
-                        <uix:NGetText DisplayName="Get Text 'Exenon UI'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NGetText_3" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" ScrapingOptions="None" TextString="[str_EXXONRPA]" Version="V3">
-                          <uix:NGetText.Target>
-                            <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="59, 435, 400, 325" DesignTimeScaleFactor="1.25" FriendlyName="'Exenon UI'" FullSelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' /&gt;" FuzzySelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' type='' aaname='                                                                                                                                                                                                                              ' /&gt;" Guid="f4865972-ecd7-400c-a063-950e70e5cd9b" InformativeScreenshot="beadf0cb931cb2274f39e639fdfdb3b3.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
-                              <uix:TargetAnchorable.Anchors>
-                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                                  <uix:Target DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAJbSURBVFhH7ZXbq2lhFMX3X668eCE8ueTy5vZAueuIeFGK0OaBSCGlSJT7ZZzG11on52DtzzlhP5xRosXym3N8c8z1gTfqe8A/TD9e9lL1G/wV+g+nHoafz2fs93vsdjscj0flqrz+Cn44HLBarTCfzzEajTAYDDCZTLBcLrHZbHA6nZRfauthOLvt9XoIhULQ6XQwmUwwm80wGAziczKZxGKxkCrgITjBjUYDfr8fbrcb2WwWtVoNn5+fKJfLiMVisNlsCIfDwpGvCpCG0+putyvAwWAQ1WoVs9kM2+1WnDuPYTgcolAowG63I5PJiAK0JA3nnxPqcrkE+J545olEQjhQKpWUq7clBafdHC6eMa1mx/dEq6fTKRwOB9LptGYKpOC0lRYajUbU63URLS0RGIlEhAPj8Vi5ei0pOGGMk8ViEcPFYrREp6LRKOLxuJiDe5KCsxPmmHHiVPP874ng9XoNn88nYsfjuicpOMUFwhyzI61umIpOpwOn04lcLqcZN2k4pziVSokYFYvFq03GjgnmMAYCAZGKSqWifHtb0nCCuLm4QFgALeVUE6hazY4J1uv18Hg8aLVayt23JQ2nWACnnguEOWacONU8Cp4xrebm83q9sFqtYgW3223l7ms9BKfUArhAWATjxKmmE/l8XiwgdkwwHeJ7s9m8mZCH4ZdiCphjDiCn+nIG2DHBfOjQiX6/L1bxpf4J/pXYMcGMKGeBjnE+VD0VTqvZMcGcAW5HDqaqp8IpWs2O+ShmOi53/dPhlBrFPx8yL4Hf0/eEv+ql6hf8HXojHPgJHRHXTVMSXGgAAAAASUVORK5CYII=" SearchSteps="Selector, FuzzySelector, Image" />
-                                </scg:List>
-                              </uix:TargetAnchorable.Anchors>
-                            </uix:TargetAnchorable>
-                          </uix:NGetText.Target>
-                        </uix:NGetText>
-                        <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_3">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:String">[priceExxonRPA]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Replace(str_EXXONRPA, "\r\n|\n|\r", " ")]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_9">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:String">[priceExxonRPA]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(priceExxonRPA, "\$ *(\d+(\.\d{1,2})?)").Groups(1).Value]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_10">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:Decimal">[DecPriceExxon]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(priceExxonRPA)]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <uix:NKeyboardShortcuts ActivateBefore="True" ClickBeforeMode="None" DisplayName="Keyboard Shortcuts" sap:VirtualizedContainerService.HintSize="433.6,178.4" sap2010:WorkflowViewState.IdRef="NKeyboardShortcuts_2" Shortcuts="[d(hk)][d(ctrl)]r[u(ctrl)][u(hk)]" Version="V3" />
-                        <uix:NSelectItem DisplayName="Select Item '----- Select -----'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NSelectItem_5" Item="WEX Academy Inc." ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
-                          <uix:NSelectItem.Items>
-                            <scg:List x:TypeArguments="x:String" Capacity="4">
-                              <x:String>----- Select -----</x:String>
-                              <x:String>Exenon UI Pharma.</x:String>
-                              <x:String>WEX Academy Inc.</x:String>
-                              <x:String>Exxon RPA Corp.</x:String>
-                            </scg:List>
-                          </uix:NSelectItem.Items>
-                          <uix:NSelectItem.Target>
-                            <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" CvTextArea="109, 391, 55, 18" CvTextArgument="Select" CvType="Text" DesignTimeRectangle="59, 385, 200, 28" DesignTimeScaleFactor="1.25" ElementType="DropDown" FriendlyName="'----- Select -----'" FullSelectorArgument="&lt;webctrl id='country' tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='country' tag='SELECT' type='' class='' aaname='' /&gt;" Guid="3540a292-c534-4440-aed0-b28f712d5df6" InformativeScreenshot="95ec1e559b09d5da8846cc333b3e8584.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
-                              <uix:TargetAnchorable.Anchors>
-                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                                  <uix:Target DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" SearchSteps="FuzzySelector" />
-                                </scg:List>
-                              </uix:TargetAnchorable.Anchors>
-                            </uix:TargetAnchorable>
-                          </uix:NSelectItem.Target>
-                        </uix:NSelectItem>
-                        <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'XOM'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NClick_4" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
-                          <uix:NClick.Target>
-                            <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="264, 385, 27, 27" DesignTimeScaleFactor="1.25" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" Guid="8dfdd932-0024-48a6-87ea-e4a86c25f6c0" InformativeScreenshot="079c32d05c3193848bd20749ccd3443f.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
-                              <uix:TargetAnchorable.Anchors>
-                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                                  <uix:Target CvTextArea="306, 392, 42, 17" CvTextArgument="XOM" CvType="Text" DesignTimeRectangle="308, 390, 41, 24" ElementType="Text" FriendlyName="'XOM'" FullSelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' type='' class='' check:innerText='XOM' /&gt;" SearchSteps="FuzzySelector, CV" />
-                                </scg:List>
-                              </uix:TargetAnchorable.Anchors>
-                            </uix:TargetAnchorable>
-                          </uix:NClick.Target>
-                        </uix:NClick>
-                        <uix:NGetText DisplayName="Get Text 'WEX Academy'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NGetText_4" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" TextString="[str_WexAcademy]" Version="V3">
-                          <uix:NGetText.Target>
-                            <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" CvElementArea="59, 433, 401, 40" CvType="InputBox" DesignTimeRectangle="59, 435, 400, 325" DesignTimeScaleFactor="1.25" FriendlyName="'WEX Academy'" FullSelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' /&gt;" FuzzySelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' type='' aaname='                                                                                                                                                                                                                              ' /&gt;" Guid="06bfae3f-f93b-4232-8da8-372aed417ff9" InformativeScreenshot="f7bae2b2b8484b22788eba2011143679.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector, CV" Version="V2" Visibility="Interactive">
-                              <uix:TargetAnchorable.Anchors>
-                                <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
-                                  <uix:Target CvElementArea="261, 382, 32, 32" CvType="Button" DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" SearchSteps="FuzzySelector, CV" />
-                                </scg:List>
-                              </uix:TargetAnchorable.Anchors>
-                            </uix:TargetAnchorable>
-                          </uix:NGetText.Target>
-                        </uix:NGetText>
-                        <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_5">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:String">[priceWEXAcademy]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Replace(str_WexAcademy, "\r\n|\n|\r", " ")]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_6">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:String">[priceWEXAcademy]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(priceWEXAcademy, "\$ *(\d+(\.\d{1,2})?)").Groups(1).Value]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_11">
-                          <Assign.To>
-                            <OutArgument x:TypeArguments="x:Decimal">[DecWexAcademy]</OutArgument>
-                          </Assign.To>
-                          <Assign.Value>
-                            <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(priceWEXAcademy)]</InArgument>
-                          </Assign.Value>
-                        </Assign>
-                        <uix:NNavigateBrowser Action="CloseTab" DisplayName="Navigate Browser - Close Tab" sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_1" Version="V3" />
-                      </Sequence>
-                    </ActivityAction>
-                  </uix:NApplicationCard.Body>
-                  <uix:NApplicationCard.TargetApp>
-                    <uix:TargetApp Area="-9, -9, 1938, 1098" BrowserType="Chrome" IconBase64="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" InformativeScreenshot="480adcd4cc855667e5ec440f8c4777d7.jpg" Selector="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" Title="RPA Stock Market" Url="https://rpachallenge.com/assets/rpaStockMarket/index.html" />
-                  </uix:NApplicationCard.TargetApp>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </uix:NApplicationCard>
-                <Sequence DisplayName=" Exxon DataTable" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_8">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:BuildDataTable DataTable="[dt_ExxonRPA]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="BuildDataTable_3" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;currentDate&quot; msdata:Caption=&quot;&quot; type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;timeStamp&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DecPriceExxon&quot; msdata:Caption=&quot;&quot; type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:BuildDataTable>
-                  <ui:ClearDataTable DataTable="[dt_ExxonRPA]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="ClearDataTable_1">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:ClearDataTable>
-                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object(){currentDate, timeStamp, DecPriceExxon}]" DataTable="[dt_ExxonRPA]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="AddDataRow_1">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:AddDataRow>
-                  <ui:AppendRange DataTable="[dt_ExxonRPA]" DisplayName="Append Range Workbook" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="ExxonRPA" WorkbookPath="Stock_Trends_Comparison.xlsx">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:AppendRange>
-                </Sequence>
-                <Sequence DisplayName="WexAcademy DataTable" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
-                  <Sequence.Variables>
-                    <Variable x:TypeArguments="sd:DataTable" Name="dt_DecWexAcademy" />
-                  </Sequence.Variables>
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ui:BuildDataTable DataTable="[dt_DecWexAcademy]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_4" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;currentDate&quot; msdata:Caption=&quot;&quot; type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;timeStamp&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DecWexAcademy&quot; msdata:Caption=&quot;&quot; type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:BuildDataTable>
-                  <ui:ClearDataTable DataTable="[dt_DecWexAcademy]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="387.2,80.8" sap2010:WorkflowViewState.IdRef="ClearDataTable_2">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:ClearDataTable>
-                  <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object(){currentDate, timeStamp, DecWexAcademy}]" DataTable="[dt_DecWexAcademy]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="AddDataRow_3">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:AddDataRow>
-                  <ui:AppendRange DataTable="[dt_DecWexAcademy]" DisplayName="Append Range Workbook" sap:VirtualizedContainerService.HintSize="387.2,116" sap2010:WorkflowViewState.IdRef="AppendRange_2" SheetName="WexAcademy" WorkbookPath="Stock_Trends_Comparison.xlsx">
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ui:AppendRange>
-                </Sequence>
-                <Assign DisplayName="currentExecutionFrequency Counter" sap:VirtualizedContainerService.HintSize="449.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_7">
+                <Assign sap:VirtualizedContainerService.HintSize="588.8,81.6" sap2010:WorkflowViewState.IdRef="Assign_12">
                   <Assign.To>
-                    <OutArgument x:TypeArguments="x:Int32">[currentExecutionFrequency]</OutArgument>
+                    <OutArgument x:TypeArguments="s:DateTime">[currentTime]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:Int32">[currentExecutionFrequency+1]</InArgument>
+                    <InArgument x:TypeArguments="s:DateTime">[DateTime.Now]</InArgument>
                   </Assign.Value>
                 </Assign>
-                <Delay DisplayName="30 Min Delay" Duration="00:30:00" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Delay_1">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                </Delay>
-              </Sequence>
-            </ui:InterruptibleDoWhile.Body>
-          </ui:InterruptibleDoWhile>
-          <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Graphical Charts" sap:VirtualizedContainerService.HintSize="526.4,24.8" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_2">
-            <ueab:ExcelProcessScopeX.Body>
-              <ActivityAction x:TypeArguments="ui:IExcelProcess">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,136.8" sap2010:WorkflowViewState.IdRef="Sequence_18">
-                  <sap:WorkflowViewStateService.ViewState>
-                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                    </scg:Dictionary>
-                  </sap:WorkflowViewStateService.ViewState>
-                  <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_3" ResizeWindow="None" WorkbookPath="Stock_Trends_Comparison.xlsx">
-                    <ueab:ExcelApplicationCard.Body>
-                      <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
-                        <ActivityAction.Argument>
-                          <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
-                        </ActivityAction.Argument>
-                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                <If Condition="[currentDate&lt;endTime]" sap:VirtualizedContainerService.HintSize="588.8,1027.2" sap2010:WorkflowViewState.IdRef="If_3">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="555.2,672.8" sap2010:WorkflowViewState.IdRef="Sequence_27">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Sequence DisplayName="Extraction and Delay" sap:VirtualizedContainerService.HintSize="512,583.2" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ui:MultipleAssign DisplayName="CurrentDate and Timestamp" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                          <ui:MultipleAssign.AssignOperations>
+                            <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="s:DateTime">[currentDate]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="s:DateTime">[DateTime.Now.Date]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                              <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+                                <ui:AssignOperation.To>
+                                  <OutArgument x:TypeArguments="x:String">[timeStamp]</OutArgument>
+                                </ui:AssignOperation.To>
+                                <ui:AssignOperation.Value>
+                                  <InArgument x:TypeArguments="x:String">[DateTime.Now.ToString("HH:mm:ss")]</InArgument>
+                                </ui:AssignOperation.Value>
+                              </ui:AssignOperation>
+                            </scg:List>
+                          </ui:MultipleAssign.AssignOperations>
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                               <x:Boolean x:Key="IsPinned">False</x:Boolean>
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
-                          <ueab:InsertExcelChartX ChartCategory="Line" ChartHeight="211" ChartType="xlLineMarkers" ChartWidth="355" DisplayName="Insert Chart" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="InsertExcelChartX_2" InsertIntoSheet="[Excel.Sheet(&quot;ExxonRPA&quot;)]" InsertedChart="[ChartVarExxon]" Left="60" Range="[Excel.Sheet(&quot;ExxonRPA&quot;)]" Top="20">
+                        </ui:MultipleAssign>
+                        <uix:NApplicationCard AttachMode="ByInstance" DisplayName="Use Browser Chrome: RPA Stock Market" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="Simulate" ScopeGuid="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V2" WindowResize="Maximize">
+                          <uix:NApplicationCard.Body>
+                            <ActivityAction x:TypeArguments="x:Object">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+                              </ActivityAction.Argument>
+                              <Sequence DisplayName="Browser Data Extraction " sap:VirtualizedContainerService.HintSize="496,2330.4" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <uix:NSelectItem DisplayName="Select Item '----- Select -----'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NSelectItem_3" Item="Exxon RPA Corp." ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
+                                  <uix:NSelectItem.Items>
+                                    <scg:List x:TypeArguments="x:String" Capacity="4">
+                                      <x:String>----- Select -----</x:String>
+                                      <x:String>Exenon UI Pharma.</x:String>
+                                      <x:String>WEX Academy Inc.</x:String>
+                                      <x:String>Exxon RPA Corp.</x:String>
+                                    </scg:List>
+                                  </uix:NSelectItem.Items>
+                                  <uix:NSelectItem.Target>
+                                    <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="59, 385, 200, 28" DesignTimeScaleFactor="1.25" ElementType="DropDown" FriendlyName="'----- Select -----'" FullSelectorArgument="&lt;webctrl id='country' tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='country' tag='SELECT' type='' class='' aaname='' /&gt;" Guid="791c3d49-da79-4c19-b389-0e562c684f16" InformativeScreenshot="95ec1e559b09d5da8846cc333b3e8584.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive" WaitForReadyArgument="None">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" SearchSteps="FuzzySelector" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NSelectItem.Target>
+                                </uix:NSelectItem>
+                                <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'XOM'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NClick_3" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
+                                  <uix:NClick.Target>
+                                    <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="264, 385, 27, 27" DesignTimeScaleFactor="1.25" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" Guid="195bd747-1f58-4e5c-98ac-94af52f46ee6" InformativeScreenshot="079c32d05c3193848bd20749ccd3443f.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target DesignTimeRectangle="308, 390, 41, 24" ElementType="Text" FriendlyName="'XOM'" FullSelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' type='' class='' check:innerText='XOM' /&gt;" ImageBase64="" SearchSteps="Selector, FuzzySelector" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NClick.Target>
+                                </uix:NClick>
+                                <uix:NGetText DisplayName="Get Text 'Exenon UI'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NGetText_3" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" ScrapingOptions="None" TextString="[str_EXXONRPA]" Version="V3">
+                                  <uix:NGetText.Target>
+                                    <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="59, 435, 400, 325" DesignTimeScaleFactor="1.25" FriendlyName="'Exenon UI'" FullSelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' /&gt;" FuzzySelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' type='' aaname='                                                                                                                                                                                                                              ' /&gt;" Guid="f4865972-ecd7-400c-a063-950e70e5cd9b" InformativeScreenshot="beadf0cb931cb2274f39e639fdfdb3b3.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" ImageBase64="iVBORw0KGgoAAAANSUhEUgAAAB8AAAAfCAYAAAAfrhY5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAAJbSURBVFhH7ZXbq2lhFMX3X668eCE8ueTy5vZAueuIeFGK0OaBSCGlSJT7ZZzG11on52DtzzlhP5xRosXym3N8c8z1gTfqe8A/TD9e9lL1G/wV+g+nHoafz2fs93vsdjscj0flqrz+Cn44HLBarTCfzzEajTAYDDCZTLBcLrHZbHA6nZRfauthOLvt9XoIhULQ6XQwmUwwm80wGAziczKZxGKxkCrgITjBjUYDfr8fbrcb2WwWtVoNn5+fKJfLiMVisNlsCIfDwpGvCpCG0+putyvAwWAQ1WoVs9kM2+1WnDuPYTgcolAowG63I5PJiAK0JA3nnxPqcrkE+J545olEQjhQKpWUq7clBafdHC6eMa1mx/dEq6fTKRwOB9LptGYKpOC0lRYajUbU63URLS0RGIlEhAPj8Vi5ei0pOGGMk8ViEcPFYrREp6LRKOLxuJiDe5KCsxPmmHHiVPP874ng9XoNn88nYsfjuicpOMUFwhyzI61umIpOpwOn04lcLqcZN2k4pziVSokYFYvFq03GjgnmMAYCAZGKSqWifHtb0nCCuLm4QFgALeVUE6hazY4J1uv18Hg8aLVayt23JQ2nWACnnguEOWacONU8Cp4xrebm83q9sFqtYgW3223l7ms9BKfUArhAWATjxKmmE/l8XiwgdkwwHeJ7s9m8mZCH4ZdiCphjDiCn+nIG2DHBfOjQiX6/L1bxpf4J/pXYMcGMKGeBjnE+VD0VTqvZMcGcAW5HDqaqp8IpWs2O+ShmOi53/dPhlBrFPx8yL4Hf0/eEv+ql6hf8HXojHPgJHRHXTVMSXGgAAAAASUVORK5CYII=" SearchSteps="Selector, FuzzySelector, Image" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NGetText.Target>
+                                </uix:NGetText>
+                                <Assign sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_3">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[priceExxonRPA]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Replace(str_EXXONRPA, "\r\n|\n|\r", " ")]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_9">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[priceExxonRPA]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(priceExxonRPA, "\$ *(\d+(\.\d{1,2})?)").Groups(1).Value]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_10">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Decimal">[DecPriceExxon]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(priceExxonRPA)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <uix:NKeyboardShortcuts ActivateBefore="True" ClickBeforeMode="None" DisplayName="Keyboard Shortcuts" sap:VirtualizedContainerService.HintSize="433.6,178.4" sap2010:WorkflowViewState.IdRef="NKeyboardShortcuts_2" Shortcuts="[d(hk)][d(ctrl)]r[u(ctrl)][u(hk)]" Version="V3" />
+                                <uix:NSelectItem ContinueOnError="False" DisplayName="Select Item '----- Select -----'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NSelectItem_5" Item="WEX Academy Inc." ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
+                                  <uix:NSelectItem.Items>
+                                    <scg:List x:TypeArguments="x:String" Capacity="4">
+                                      <x:String>----- Select -----</x:String>
+                                      <x:String>Exenon UI Pharma.</x:String>
+                                      <x:String>WEX Academy Inc.</x:String>
+                                      <x:String>Exxon RPA Corp.</x:String>
+                                    </scg:List>
+                                  </uix:NSelectItem.Items>
+                                  <uix:NSelectItem.Target>
+                                    <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" CvTextArea="109, 391, 55, 18" CvTextArgument="Select" CvType="Text" DesignTimeRectangle="59, 385, 200, 28" DesignTimeScaleFactor="1.25" ElementType="DropDown" FriendlyName="'----- Select -----'" FullSelectorArgument="&lt;webctrl id='country' tag='SELECT' /&gt;" FuzzySelectorArgument="&lt;webctrl id='country' tag='SELECT' type='' class='' aaname='' /&gt;" Guid="3540a292-c534-4440-aed0-b28f712d5df6" InformativeScreenshot="95ec1e559b09d5da8846cc333b3e8584.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" SearchSteps="FuzzySelector" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NSelectItem.Target>
+                                </uix:NSelectItem>
+                                <uix:NClick ActivateBefore="True" ClickType="Single" DisplayName="Click 'XOM'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NClick_4" KeyModifiers="None" MouseButton="Left" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" Version="V3">
+                                  <uix:NClick.Target>
+                                    <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" DesignTimeRectangle="264, 385, 27, 27" DesignTimeScaleFactor="1.25" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" Guid="8dfdd932-0024-48a6-87ea-e4a86c25f6c0" InformativeScreenshot="079c32d05c3193848bd20749ccd3443f.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector" Version="V2" Visibility="Interactive">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target CvTextArea="306, 392, 42, 17" CvTextArgument="XOM" CvType="Text" DesignTimeRectangle="308, 390, 41, 24" ElementType="Text" FriendlyName="'XOM'" FullSelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' /&gt;" FuzzySelectorArgument="&lt;webctrl aaname='XOM' tag='SPAN' type='' class='' check:innerText='XOM' /&gt;" SearchSteps="FuzzySelector, CV" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NClick.Target>
+                                </uix:NClick>
+                                <uix:NGetText DisplayName="Get Text 'WEX Academy'" sap:VirtualizedContainerService.HintSize="433.6,157.6" sap2010:WorkflowViewState.IdRef="NGetText_4" ScopeIdentifier="a6ca676d-5df9-4fbb-b163-ea1595543cb5" TextString="[str_WexAcademy]" Version="V3">
+                                  <uix:NGetText.Target>
+                                    <uix:TargetAnchorable BrowserURL="https://rpachallenge.com/assets/rpaStockMarket/index.html" CvElementArea="59, 433, 401, 40" CvType="InputBox" DesignTimeRectangle="59, 435, 400, 325" DesignTimeScaleFactor="1.25" FriendlyName="'WEX Academy'" FullSelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' /&gt;" FuzzySelectorArgument="&lt;webctrl class='inneritem1' tag='DIV' type='' aaname='                                                                                                                                                                                                                              ' /&gt;" Guid="06bfae3f-f93b-4232-8da8-372aed417ff9" InformativeScreenshot="f7bae2b2b8484b22788eba2011143679.png" ScopeSelectorArgument="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" SearchSteps="FuzzySelector, CV" Version="V2" Visibility="Interactive">
+                                      <uix:TargetAnchorable.Anchors>
+                                        <scg:List x:TypeArguments="uix:ITarget" Capacity="1">
+                                          <uix:Target CvElementArea="261, 382, 32, 32" CvType="Button" DesignTimeRectangle="264, 385, 27, 27" ElementType="InputBox" FriendlyName="'INPUT'" FullSelectorArgument="&lt;webctrl tag='INPUT' type='image' /&gt;" FuzzySelectorArgument="&lt;webctrl tag='INPUT' type='image' class='' aaname='' /&gt;" SearchSteps="FuzzySelector, CV" />
+                                        </scg:List>
+                                      </uix:TargetAnchorable.Anchors>
+                                    </uix:TargetAnchorable>
+                                  </uix:NGetText.Target>
+                                </uix:NGetText>
+                                <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_5">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[priceWEXAcademy]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Replace(str_WexAcademy, "\r\n|\n|\r", " ")]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_6">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:String">[priceWEXAcademy]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:String">[System.Text.RegularExpressions.Regex.Match(priceWEXAcademy, "\$ *(\d+(\.\d{1,2})?)").Groups(1).Value]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <Assign sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="Assign_11">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Decimal">[DecWexAcademy]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Decimal">[Convert.ToDecimal(priceWEXAcademy)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <uix:NNavigateBrowser Action="CloseTab" DisplayName="Navigate Browser - Close Tab" sap:VirtualizedContainerService.HintSize="433.6,82.4" sap2010:WorkflowViewState.IdRef="NNavigateBrowser_1" Version="V3" />
+                              </Sequence>
+                            </ActivityAction>
+                          </uix:NApplicationCard.Body>
+                          <uix:NApplicationCard.TargetApp>
+                            <uix:TargetApp Area="-9, -9, 1938, 1098" BrowserType="Chrome" IconBase64="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" InformativeScreenshot="480adcd4cc855667e5ec440f8c4777d7.jpg" Selector="&lt;html app='chrome.exe' title='RPA Stock Market' /&gt;" Title="RPA Stock Market" Url="https://rpachallenge.com/assets/rpaStockMarket/index.html" />
+                          </uix:NApplicationCard.TargetApp>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </uix:NApplicationCard>
+                        <Sequence DisplayName=" Exxon DataTable" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:BuildDataTable DataTable="[dt_ExxonRPA]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="BuildDataTable_3" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;currentDate&quot; msdata:Caption=&quot;&quot; type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;timeStamp&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DecPriceExxon&quot; msdata:Caption=&quot;&quot; type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                          </ueab:InsertExcelChartX>
-                          <ueab:InsertExcelChartX ChartCategory="Line" ChartHeight="211" ChartType="xlLineMarkers" ChartWidth="355" DisplayName="Insert Chart" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="InsertExcelChartX_3" InsertIntoSheet="[Excel.Sheet(&quot;WexAcademy&quot;)]" InsertedChart="[ChartVarWexAcademy]" Left="60" Range="[Excel.Sheet(&quot;WexAcademy&quot;)]" Top="20">
+                          </ui:BuildDataTable>
+                          <ui:ClearDataTable DataTable="[dt_ExxonRPA]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="ClearDataTable_1">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                          </ueab:InsertExcelChartX>
+                          </ui:ClearDataTable>
+                          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object(){currentDate, timeStamp, DecPriceExxon}]" DataTable="[dt_ExxonRPA]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="AddDataRow_1">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:AddDataRow>
+                          <ui:AppendRange DataTable="[dt_ExxonRPA]" DisplayName="Append Range Workbook" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="AppendRange_1" SheetName="ExxonRPA" WorkbookPath="Stock_Trends_Comparison.xlsx">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:AppendRange>
                         </Sequence>
-                      </ActivityAction>
-                    </ueab:ExcelApplicationCard.Body>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </ueab:ExcelApplicationCard>
-                </Sequence>
-              </ActivityAction>
-            </ueab:ExcelProcessScopeX.Body>
+                        <Sequence DisplayName="WexAcademy DataTable" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                          <Sequence.Variables>
+                            <Variable x:TypeArguments="sd:DataTable" Name="dt_DecWexAcademy" />
+                          </Sequence.Variables>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:BuildDataTable DataTable="[dt_DecWexAcademy]" DisplayName="Build Data Table" sap:VirtualizedContainerService.HintSize="387.2,60" sap2010:WorkflowViewState.IdRef="BuildDataTable_4" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;currentDate&quot; msdata:Caption=&quot;&quot; type=&quot;xs:dateTime&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;timeStamp&quot; msdata:Caption=&quot;&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DecWexAcademy&quot; msdata:Caption=&quot;&quot; type=&quot;xs:decimal&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:BuildDataTable>
+                          <ui:ClearDataTable DataTable="[dt_DecWexAcademy]" DisplayName="Clear Data Table" sap:VirtualizedContainerService.HintSize="387.2,80.8" sap2010:WorkflowViewState.IdRef="ClearDataTable_2">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:ClearDataTable>
+                          <ui:AddDataRow DataRow="{x:Null}" ArrayRow="[New Object(){currentDate, timeStamp, DecWexAcademy}]" DataTable="[dt_DecWexAcademy]" DisplayName="Add Data Row" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="AddDataRow_3">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:AddDataRow>
+                          <ui:AppendRange DataTable="[dt_DecWexAcademy]" DisplayName="Append Range Workbook" sap:VirtualizedContainerService.HintSize="387.2,116" sap2010:WorkflowViewState.IdRef="AppendRange_2" SheetName="WexAcademy" WorkbookPath="Stock_Trends_Comparison.xlsx">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:AppendRange>
+                        </Sequence>
+                        <Assign DisplayName="currentExecutionFrequency Counter" sap:VirtualizedContainerService.HintSize="449.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_7">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[currentExecutionFrequency]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[currentExecutionFrequency+1]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <Delay DisplayName="30 Min Delay" Duration="00:30:00" sap:VirtualizedContainerService.HintSize="449.6,90.4" sap2010:WorkflowViewState.IdRef="Delay_1">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </Delay>
+                      </Sequence>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap:VirtualizedContainerService.HintSize="476.8,171.2" sap2010:WorkflowViewState.IdRef="Sequence_28">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="433.6,81.6" sap2010:WorkflowViewState.IdRef="Assign_14">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[exitLoop]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </Sequence>
+                  </If.Else>
+                </If>
+              </Sequence>
+            </ui:InterruptibleDoWhile.Body>
+            <ui:InterruptibleDoWhile.Condition>
+              <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="currentExecutionFrequency &lt; totalExecutionFrequency AndAlso DateTime.Now &lt;= endTime AndAlso Not exitLoop" />
+            </ui:InterruptibleDoWhile.Condition>
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-          </ueab:ExcelProcessScopeX>
-          <umab:ExchangeApplicationCard ConnectionAccountName="{x:Null}" ConnectionId="{x:Null}" SharedMailbox="{x:Null}" Account="caleb.naidoo@firtech.co.za" DisplayName="Use Outlook 365" EmailAddress="caleb.naidoo@firtech.co.za" sap:VirtualizedContainerService.HintSize="526.4,24.8" sap2010:WorkflowViewState.IdRef="ExchangeApplicationCard_2" UseConnectionService="False">
-            <umab:ExchangeApplicationCard.ApplicationId>
-              <InArgument x:TypeArguments="x:String">
-                <Literal x:TypeArguments="x:String" Value="" />
-              </InArgument>
-            </umab:ExchangeApplicationCard.ApplicationId>
-            <umab:ExchangeApplicationCard.Body>
-              <ActivityAction x:TypeArguments="um:IMailQuickHandle">
-                <ActivityAction.Argument>
-                  <DelegateInArgument x:TypeArguments="um:IMailQuickHandle" Name="Exchange" />
-                </ActivityAction.Argument>
-                <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,24.8" sap2010:WorkflowViewState.IdRef="Sequence_23">
+          </ui:InterruptibleDoWhile>
+          <If Condition="[Not exitLoop]" DisplayName="If Loop is done - chart creation and email" sap:VirtualizedContainerService.HintSize="665.6,362.4" sap2010:WorkflowViewState.IdRef="If_2">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="300,179.2" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ueab:ExcelProcessScopeX DisplayAlerts="{x:Null}" ExistingProcessAction="{x:Null}" FileConflictResolution="{x:Null}" LaunchMethod="{x:Null}" LaunchTimeout="{x:Null}" MacroSettings="{x:Null}" ProcessMode="{x:Null}" ShowExcelWindow="{x:Null}" DisplayName="Graphical Charts" sap:VirtualizedContainerService.HintSize="256.8,24.8" sap2010:WorkflowViewState.IdRef="ExcelProcessScopeX_2">
+                  <ueab:ExcelProcessScopeX.Body>
+                    <ActivityAction x:TypeArguments="ui:IExcelProcess">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="ui:IExcelProcess" Name="ExcelProcessScopeTag" />
+                      </ActivityAction.Argument>
+                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="545.6,583.2" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ueab:ExcelApplicationCard Password="{x:Null}" ReadFormatting="{x:Null}" DisplayName="Use Excel File" sap:VirtualizedContainerService.HintSize="483.2,471.2" sap2010:WorkflowViewState.IdRef="ExcelApplicationCard_3" ResizeWindow="None" WorkbookPath="Stock_Trends_Comparison.xlsx">
+                          <ueab:ExcelApplicationCard.Body>
+                            <ActivityAction x:TypeArguments="ue:IWorkbookQuickHandle">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="ue:IWorkbookQuickHandle" Name="Excel" />
+                              </ActivityAction.Argument>
+                              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,201.6" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <ueab:InsertExcelChartX ChartCategory="Line" ChartHeight="211" ChartType="xlLineMarkers" ChartWidth="355" DisplayName="Insert Chart" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="InsertExcelChartX_2" InsertIntoSheet="[Excel.Sheet(&quot;ExxonRPA&quot;)]" InsertedChart="[ChartVarExxon]" Left="60" Range="[Excel.Sheet(&quot;ExxonRPA&quot;)]" Top="20">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ueab:InsertExcelChartX>
+                                <ueab:InsertExcelChartX ChartCategory="Line" ChartHeight="211" ChartType="xlLineMarkers" ChartWidth="355" DisplayName="Insert Chart" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="InsertExcelChartX_3" InsertIntoSheet="[Excel.Sheet(&quot;WexAcademy&quot;)]" InsertedChart="[ChartVarWexAcademy]" Left="60" Range="[Excel.Sheet(&quot;WexAcademy&quot;)]" Top="20">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                </ueab:InsertExcelChartX>
+                              </Sequence>
+                            </ActivityAction>
+                          </ueab:ExcelApplicationCard.Body>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </ueab:ExcelApplicationCard>
+                      </Sequence>
+                    </ActivityAction>
+                  </ueab:ExcelProcessScopeX.Body>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <umab:SendMailX Bcc="{x:Null}" Cc="{x:Null}" HtmlBodyFromText="{x:Null}" ReplyTo="{x:Null}" Account="[Exchange]" Body="Here are the stock price trend comparison for Exxon RPA Corp. and WEX Academy Inc." BodyType="Text" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="SendMailX_2" Importance="Normal" IsDraft="False" MaxBodyDocumentSizeMB="2" Sensitivity="Normal" Subject="Stock Price Trend Comparison" To="[SenderEmail]" UseDocumentAsBody="False">
-                    <umab:SendMailX.Files>
-                      <scg:List x:TypeArguments="InArgument(x:String)" Capacity="1">
-                        <InArgument x:TypeArguments="x:String">Stock_Trends_Comparison.xlsx</InArgument>
-                      </scg:List>
-                    </umab:SendMailX.Files>
-                    <umab:SendMailX.HtmlBodyFromFile>
-                      <umabh:HtmlContentArgument FilePath="{x:Null}">
-                        <umabh:HtmlContentArgument.RuntimeImages>
-                          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                        </umabh:HtmlContentArgument.RuntimeImages>
-                        <umabh:HtmlContentArgument.ValueMappings>
-                          <scg:List x:TypeArguments="umabh:HtmlValueMappingBase" Capacity="0" />
-                        </umabh:HtmlContentArgument.ValueMappings>
-                      </umabh:HtmlContentArgument>
-                    </umab:SendMailX.HtmlBodyFromFile>
-                    <sap:WorkflowViewStateService.ViewState>
-                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                      </scg:Dictionary>
-                    </sap:WorkflowViewStateService.ViewState>
-                  </umab:SendMailX>
-                </Sequence>
-              </ActivityAction>
-            </umab:ExchangeApplicationCard.Body>
-            <umab:ExchangeApplicationCard.TenantId>
-              <InArgument x:TypeArguments="x:String">
-                <Literal x:TypeArguments="x:String" Value="" />
-              </InArgument>
-            </umab:ExchangeApplicationCard.TenantId>
-            <sap:WorkflowViewStateService.ViewState>
-              <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
-                <x:Boolean x:Key="IsPinned">False</x:Boolean>
-              </scg:Dictionary>
-            </sap:WorkflowViewStateService.ViewState>
-          </umab:ExchangeApplicationCard>
+                </ueab:ExcelProcessScopeX>
+                <umab:ExchangeApplicationCard ConnectionAccountName="{x:Null}" ConnectionId="{x:Null}" SharedMailbox="{x:Null}" Account="caleb.naidoo@firtech.co.za" DisplayName="Use Outlook 365" EmailAddress="caleb.naidoo@firtech.co.za" sap:VirtualizedContainerService.HintSize="256.8,24.8" sap2010:WorkflowViewState.IdRef="ExchangeApplicationCard_2" UseConnectionService="False">
+                  <umab:ExchangeApplicationCard.ApplicationId>
+                    <InArgument x:TypeArguments="x:String">
+                      <Literal x:TypeArguments="x:String" Value="" />
+                    </InArgument>
+                  </umab:ExchangeApplicationCard.ApplicationId>
+                  <umab:ExchangeApplicationCard.Body>
+                    <ActivityAction x:TypeArguments="um:IMailQuickHandle">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="um:IMailQuickHandle" Name="Exchange" />
+                      </ActivityAction.Argument>
+                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="449.6,136.8" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <umab:SendMailX Bcc="{x:Null}" Cc="{x:Null}" HtmlBodyFromText="{x:Null}" ReplyTo="{x:Null}" Account="[Exchange]" Body="Here are the stock price trend comparison for Exxon RPA Corp. and WEX Academy Inc." BodyType="Text" DisplayName="Send Email" sap:VirtualizedContainerService.HintSize="387.2,24.8" sap2010:WorkflowViewState.IdRef="SendMailX_2" Importance="Normal" IsDraft="False" MaxBodyDocumentSizeMB="2" Sensitivity="Normal" Subject="Stock Price Trend Comparison" To="[SenderEmail]" UseDocumentAsBody="False">
+                          <umab:SendMailX.Files>
+                            <scg:List x:TypeArguments="InArgument(x:String)" Capacity="1">
+                              <InArgument x:TypeArguments="x:String">Stock_Trends_Comparison.xlsx</InArgument>
+                            </scg:List>
+                          </umab:SendMailX.Files>
+                          <umab:SendMailX.HtmlBodyFromFile>
+                            <umabh:HtmlContentArgument FilePath="{x:Null}">
+                              <umabh:HtmlContentArgument.RuntimeImages>
+                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                              </umabh:HtmlContentArgument.RuntimeImages>
+                              <umabh:HtmlContentArgument.ValueMappings>
+                                <scg:List x:TypeArguments="umabh:HtmlValueMappingBase" Capacity="0" />
+                              </umabh:HtmlContentArgument.ValueMappings>
+                            </umabh:HtmlContentArgument>
+                          </umab:SendMailX.HtmlBodyFromFile>
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </umab:SendMailX>
+                      </Sequence>
+                    </ActivityAction>
+                  </umab:ExchangeApplicationCard.Body>
+                  <umab:ExchangeApplicationCard.TenantId>
+                    <InArgument x:TypeArguments="x:String">
+                      <Literal x:TypeArguments="x:String" Value="" />
+                    </InArgument>
+                  </umab:ExchangeApplicationCard.TenantId>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </umab:ExchangeApplicationCard>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_26" />
+            </If.Else>
+          </If>
         </Sequence>
       </If.Then>
       <If.Else>
