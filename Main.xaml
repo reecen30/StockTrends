@@ -193,12 +193,12 @@
       <Variable x:TypeArguments="s:DateTime" Name="currentTime" />
       <Variable x:TypeArguments="s:DateTime" Name="startTime">
         <Variable.Default>
-          <VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="New DateTime(Now.Year, Now.Month, Now.Day, 16, 0, 0)" />
+          <VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="New DateTime(Now.Year, Now.Month, Now.Day, 10, 0, 0)" />
         </Variable.Default>
       </Variable>
       <Variable x:TypeArguments="s:DateTime" Name="endTime">
         <Variable.Default>
-          <VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="New DateTime(Now.Year, Now.Month, Now.Day, 17, 0, 0)" />
+          <VisualBasicValue x:TypeArguments="s:DateTime" ExpressionText="New DateTime(Now.Year, Now.Month, Now.Day, 16, 0, 0)" />
         </Variable.Default>
       </Variable>
       <Variable x:TypeArguments="x:Double" Name="totalExecutionFrequency" />
